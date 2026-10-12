@@ -1,15 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Mona Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+
+  --color-dark-200: #475467;
+  --color-light-blue-100: #c1d3f81a;
+  --color-light-blue-200: #a7bff14d;
+
+  --color-badge-green: #d5faf1;
+  --color-badge-red: #f9e3e2;
+  --color-badge-yellow: #fceed8;
+
+  --color-badge-green-text: #254d4a;
+  --color-badge-red-text: #752522;
+  --color-badge-yellow-text: #73321b;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white;
+  min-height: 100%;
+  margin: 0;
+  font-family: var(--font-sans);
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+main {
+  @apply min-h-screen pt-10;
+}
+
+h1 {
+  @apply max-sm:text-3xl text-5xl leading-tight font-semibold text-center;
+  background: linear-gradient(to right, #ab8c95, #000000, #8e97c5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+h2 {
+  @apply max-sm:text-base text-lg font-normal;
+  color: var(--color-dark-200);
+}
+
+@layer components {
+  /* Main page layout */
+  .main-section {
+    @apply flex flex-col items-center gap-10 pt-10 px-6 max-w-7xl mx-auto w-full pb-16;
   }
+
+  .page-heading {
+    @apply flex flex-col items-center gap-3 text-center max-w-3xl;
+  }
+
+  /* Responsive 3-card grid */
+  .resumes-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full;
+  }
+
+  /* Single Card container */
+  .resume-card {
+    @apply flex flex-col gap-4 bg-white rounded-2xl p-5 shadow-sm border border-gray-100 w-full transition-all duration-300 hover:shadow-md;
+  }
+
+  /* Header inside card */
+  .resume-card-header {
+    @apply flex flex-row items-center justify-between gap-4 w-full;
+  }
+
+  /* Gradient border around image preview */
+  .gradient-border {
+    @apply p-2 rounded-2xl overflow-hidden;
+    background: linear-gradient(
+      to bottom,
+      var(--color-light-blue-100),
+      var(--color-light-blue-200)
+    );
+  }
+
+  /* Navbar */
+  .navbar {
+    @apply flex flex-row justify-between items-center bg-white rounded-full p-4 w-full px-8 max-w-[1200px] mx-auto shadow-sm;
+  }
+
+  .primary-button {
+    @apply text-white rounded-full px-5 py-2 cursor-pointer font-medium;
+    background: linear-gradient(to bottom, #8e98ff, #606beb);
+  }
+}
+
+.auth-button {
+  @apply rounded-full py-3 px-8 cursor-pointer w-full text-base font-semibold text-white shadow-md transition-all duration-300 hover:opacity-90;
+  background: linear-gradient(to bottom, #8e98ff, #606beb);
 }
