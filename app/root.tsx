@@ -1,6 +1,5 @@
 import { usePuterStore } from "~/lib/puter";
-import { useEffect } from "react";
-
+import { useEffect, useRef } from "react";
 
 import {
   isRouteErrorResponse,
@@ -27,8 +26,58 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// export function Layout({ children }: { children: React.ReactNode }) {
+//   const { init } = usePuterStore();
+//   const hasInitialized = useRef(false);
+
+//   useEffect(() => {
+//     if (!hasInitialized.current) {
+//       hasInitialized.current = true;
+//       init();
+//     }
+//   }, [init]);
+
+//   return (
+//     <html lang="en">
+//       <head>
+//         <meta charSet="utf-8" />
+//         <meta name="viewport" content="width=device-width, initial-scale=1" />
+//         <Meta />
+//         <Links />
+//         {/* Suppress Puter's forbidden Origin header and silence banner */}
+//         <script
+//           dangerouslySetInnerHTML={{
+//             __html: `
+//               if (typeof window !== 'undefined') {
+//                 const originalSetRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+//                 XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
+//                   if (header && header.toLowerCase() === 'origin') return;
+//                   return originalSetRequestHeader.apply(this, arguments);
+//                 };
+//               }
+//             `,
+//           }}
+//         />
+//         <script src="https://js.puter.com/v2/"></script>
+//         <script dangerouslySetInnerHTML={{ __html: "window.puter && (window.puter.quiet = true);" }} />
+//         <script
+//           dangerouslySetInnerHTML={{
+//             __html: `if (window.puter) { window.puter.quiet = true; }`,
+//           }}
+//         />
+//       </head>
+//       <body>
+//         {children}
+//         <ScrollRestoration />
+//         <Scripts />
+//       </body>
+//     </html>
+//   );
+// }
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const { init } = usePuterStore();
+
   useEffect(() => {
     init();
   }, [init]);
@@ -40,9 +89,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        {/* Put external scripts inside <head> */}
+        <script src="https://js.puter.com/v2/"></script>
       </head>
       <body>
-        <script src="https://js.puter.com/v2/"></script>
         {children}
         <ScrollRestoration />
         <Scripts />
